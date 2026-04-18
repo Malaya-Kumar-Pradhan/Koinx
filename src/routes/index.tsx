@@ -72,13 +72,19 @@ function Index() {
       <header className="border-b border-border bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-lg bg-primary text-primary-foreground grid place-items-center font-bold">
-              K
-            </div>
-            <div>
-              <h1 className="font-semibold text-foreground leading-tight">Tax Optimisation</h1>
-              <p className="text-xs text-muted-foreground">Lower your tax, smartly.</p>
-            </div>
+            <h1 className="font-extrabold text-4xl tracking-wide">
+              <span className="text-blue-600 dark:text-blue-400">Koin</span>
+              <span className="text-yellow-500 dark:text-yellow-300">X</span>
+            </h1>
+          </div>
+          <ThemeToggle />
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+        <section className="space-y-3">
+          <div className="flex items-center gap-3">
+            <h1 className="font-semibold text-2xl text-foreground leading-tight">Tax Harvesting</h1>
             <div className="relative group ml-2">
               <button
                 type="button"
@@ -100,12 +106,6 @@ function Index() {
               </div>
             </div>
           </div>
-          <ThemeToggle />
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-        <section className="space-y-3">
           <details className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground" open>
             <summary className="cursor-pointer font-medium text-foreground">
               Important Notes & Disclaimers
