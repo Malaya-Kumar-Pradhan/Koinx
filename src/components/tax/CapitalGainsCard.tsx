@@ -8,7 +8,7 @@ interface Props {
 
 const fmt = (n: number) => {
   const abs = Math.abs(n);
-  const s = abs.toLocaleString("en-IN", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const s = abs.toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   return n < 0 ? `- ${s}` : s;
 };
 
@@ -37,23 +37,23 @@ export function CapitalGainsCard({ variant, stcgProfits, stcgLosses, ltcgProfits
         <div className={`font-medium ${mutedText}`}>Long-term</div>
 
         <div className={mutedText}>Profits</div>
-        <div className="tabular-nums">₹ {fmt(stcgProfits)}</div>
-        <div className="tabular-nums">₹ {fmt(ltcgProfits)}</div>
+        <div className="tabular-nums">$ {fmt(stcgProfits)}</div>
+        <div className="tabular-nums">$ {fmt(ltcgProfits)}</div>
 
         <div className={mutedText}>Losses</div>
-        <div className="tabular-nums">- ₹ {fmt(stcgLosses)}</div>
-        <div className="tabular-nums">- ₹ {fmt(ltcgLosses)}</div>
+        <div className="tabular-nums">- $ {fmt(stcgLosses)}</div>
+        <div className="tabular-nums">- $ {fmt(ltcgLosses)}</div>
 
         <div className={`font-semibold ${isPre ? "" : ""}`}>Net Capital Gains</div>
-        <div className="tabular-nums font-semibold">₹ {fmt(stcgNet)}</div>
-        <div className="tabular-nums font-semibold">₹ {fmt(ltcgNet)}</div>
+        <div className="tabular-nums font-semibold">$ {fmt(stcgNet)}</div>
+        <div className="tabular-nums font-semibold">$ {fmt(ltcgNet)}</div>
       </div>
 
       <div className={`border-t ${dividerClasses} pt-4 flex items-center justify-between`}>
         <span className="font-semibold">
           {isPre ? "Realised Capital Gains" : "Effective Capital Gains"}
         </span>
-        <span className="text-xl font-bold tabular-nums">₹ {fmt(realised)}</span>
+        <span className="text-xl font-bold tabular-nums">$ {fmt(realised)}</span>
       </div>
     </div>
   );
