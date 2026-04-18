@@ -1,21 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { HelpCircle } from "lucide-react";
 import { fetchCapitalGains, fetchHoldings, holdingId, type CapitalGains, type Holding } from "@/lib/taxApi";
 import { CapitalGainsCard } from "@/components/tax/CapitalGainsCard";
 import { HoldingsTable } from "@/components/tax/HoldingsTable";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Tax Loss Harvesting — Optimize Your Crypto Taxes" },
+      { title: "Tax Optimisation — Optimize Your Crypto Taxes" },
       { name: "description", content: "Visualize capital gains and harvest losses to reduce your crypto tax bill in real-time." },
     ],
   }),
 });
 
 const fmt = (n: number) =>
-  Math.abs(n).toLocaleString("en-IN", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  Math.abs(n).toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
 function Index() {
   const [holdings, setHoldings] = useState<Holding[]>([]);
@@ -74,10 +76,31 @@ function Index() {
               K
             </div>
             <div>
-              <h1 className="font-semibold text-foreground leading-tight">Tax Harvesting</h1>
+              <h1 className="font-semibold text-foreground leading-tight">Tax Optimisation</h1>
               <p className="text-xs text-muted-foreground">Lower your tax, smartly.</p>
             </div>
+            <div className="relative group ml-2">
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-foreground hover:bg-muted transition-colors"
+                aria-label="How it works"
+              >
+                <HelpCircle className="h-3.5 w-3.5" />
+                How it works?
+              </button>
+              <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute left-0 top-full mt-2 z-50 w-80 rounded-xl border border-border bg-popover text-popover-foreground shadow-lg p-4 text-sm">
+                <p className="font-semibold mb-2">How Tax Optimisation works</p>
+                <ol className="list-decimal pl-4 space-y-1.5 text-muted-foreground">
+                  <li>Review your capital gains in the <span className="text-foreground font-medium">Pre Harvesting</span> card.</li>
+                  <li>Select holdings from the table to simulate selling them.</li>
+                  <li>Losses offset gains, lowering your <span className="text-foreground font-medium">Effective Capital Gains</span>.</li>
+                  <li>Watch the savings update live in the <span className="text-foreground font-medium">After Harvesting</span> card.</li>
+                </ol>
+                <p className="mt-3 text-xs text-muted-foreground">Selections are simulated — no orders are placed.</p>
+              </div>
+            </div>
           </div>
+          <ThemeToggle />
         </div>
       </header>
 
@@ -90,7 +113,7 @@ function Index() {
             <ul className="list-disc pl-5 mt-3 space-y-1">
               <li>Tax-loss harvesting offsets capital gains by realizing losses on selected assets.</li>
               <li>Selections are simulated — no orders will be placed.</li>
-              <li>Short-term and long-term gains are taxed differently in India.</li>
+              <li>Short-term and long-term gains may be taxed at different rates.</li>
             </ul>
           </details>
         </section>
