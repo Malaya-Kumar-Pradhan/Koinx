@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import type { Holding } from "@/lib/taxApi";
 import { holdingId } from "@/lib/taxApi";
 
@@ -34,9 +35,20 @@ function CoinLogo({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+type StcgSort = "desc" | "asc"; // desc => negatives first (▼), asc => positives first (▲)
+
 export function HoldingsTable({ holdings, selected, onToggle, onToggleAll }: Props) {
   const allSelected = holdings.length > 0 && selected.size === holdings.length;
   const someSelected = selected.size > 0 && !allSelected;
+  const [stcgSort, setStcgSort] = useState<StcgSort>("desc");
+
+  const rows = useMemo(() => {
+    const indexed = holdings.map((h, i) => ({ h, i }));
+    indexed.sort((a, b) =>
+      stcgSort === "desc" ? a.h.stcg.gain - b.h.stcg.gain : b.h.stcg.gain - a.h.stcg.gain,
+    );
+    return indexed;
+  }, [holdings, stcgSort]);
 
   return (
     <div className="rounded-2xl border border-border bg-card overflow-hidden">
@@ -58,13 +70,27 @@ export function HoldingsTable({ holdings, selected, onToggle, onToggleAll }: Pro
               <th className="px-4 py-3 text-left font-medium">Asset</th>
               <th className="px-4 py-3 text-right font-medium">Holdings</th>
               <th className="px-4 py-3 text-right font-medium">Current Price</th>
-              <th className="px-4 py-3 text-right font-medium">Short-Term</th>
+              <th className="px-4 py-3 text-right font-medium">
+                <button
+                  type="button"
+                  onClick={() => setStcgSort((s) => (s === "desc" ? "asc" : "desc"))}
+                  className="inline-flex items-center gap-1 ml-auto hover:text-foreground transition-colors"
+                  aria-label={`Sort short-term ${stcgSort === "desc" ? "ascending" : "descending"}`}
+                >
+                  Short-Term
+                  {stcgSort === "desc" ? (
+                    <ChevronDown className="h-3.5 w-3.5" />
+                  ) : (
+                    <ChevronUp className="h-3.5 w-3.5" />
+                  )}
+                </button>
+              </th>
               <th className="px-4 py-3 text-right font-medium">Long-Term</th>
               <th className="px-4 py-3 text-right font-medium">Amount to Sell</th>
             </tr>
           </thead>
           <tbody>
-            {holdings.map((h, i) => {
+            {rows.map(({ h, i }) => {
               const id = holdingId(h, i);
               const isSel = selected.has(id);
               return (
