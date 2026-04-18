@@ -12,12 +12,12 @@ interface Props {
 const fmtNum = (n: number, max = 4) => {
   if (n === 0) return "0";
   if (Math.abs(n) < 0.0001) return n.toExponential(2);
-  return n.toLocaleString("en-IN", { maximumFractionDigits: max });
+  return n.toLocaleString("en-US", { maximumFractionDigits: max });
 };
 
 const fmtMoney = (n: number) => {
   const sign = n < 0 ? "-" : "";
-  return `${sign}₹ ${Math.abs(n).toLocaleString("en-IN", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`;
+  return `${sign}$ ${Math.abs(n).toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`;
 };
 
 const FALLBACK = "https://koinx-statics.s3.ap-south-1.amazonaws.com/currencies/DefaultCoin.svg";
@@ -95,9 +95,9 @@ export function HoldingsTable({ holdings, selected, onToggle, onToggleAll }: Pro
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="tabular-nums text-foreground">{fmtNum(h.totalHolding)} {h.coin}</div>
-                    <div className="text-xs text-muted-foreground tabular-nums">Avg ₹ {fmtNum(h.averageBuyPrice)}</div>
+                    <div className="text-xs text-muted-foreground tabular-nums">Avg $ {fmtNum(h.averageBuyPrice)}</div>
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums">₹ {fmtNum(h.currentPrice, 2)}</td>
+                  <td className="px-4 py-3 text-right tabular-nums">$ {fmtNum(h.currentPrice, 2)}</td>
                   <td className="px-4 py-3 text-right">
                     <div className={`tabular-nums font-medium ${h.stcg.gain >= 0 ? "text-success" : "text-destructive"}`}>
                       {fmtMoney(h.stcg.gain)}

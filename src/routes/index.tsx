@@ -121,7 +121,7 @@ function Index() {
                 {showSavings && (
                   <div className="rounded-xl bg-success/10 border border-success/30 text-success-foreground px-4 py-3 text-sm font-medium animate-in fade-in slide-in-from-bottom-2">
                     🎉 You're going to save{" "}
-                    <span className="font-bold">₹ {fmt(savings)}</span> in taxes.
+                    <span className="font-bold">$ {fmt(savings)}</span> in taxes.
                   </div>
                 )}
               </div>
